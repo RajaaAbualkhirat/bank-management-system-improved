@@ -16,5 +16,3 @@ The original code was used as a starting point, and several improvements were ap
 - Reduced code duplication.
 - Replaced recursive menu calls with loop-based control.
 - Improved maintainability and reliability.
-
-This project was developed for educational purposes.
