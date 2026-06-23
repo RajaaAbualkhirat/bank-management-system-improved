@@ -48,16 +48,20 @@ def get_integer(message):
 def create_account():
     try:
         bank_file = open("bank.bin", "rb")
+        
         while True:
             customer = pickle.load(bank_file)
             last_account_number = customer.account_number
+            
     except FileNotFoundError:
         last_account_number = START_ACCOUNT_NUMBER
     except EOFError:
         last_account_number = last_account_number + 1
         bank_file.close()
+        
     bank_file = open("bank.bin", "ab")
     new_customer = Customer(last_account_number)
+    
     pickle.dump(new_customer, bank_file)
     bank_file.close()
 
@@ -132,6 +136,11 @@ def deposit_money():
 
     def add_balance(customer):
         deposit_amount = get_integer("Enter Deposit Amount: ")
+        
+        while deposit_amount <= 0:
+            print("Amount must be positive.")
+            deposit_amount = get_integer("Enter Deposit Amount: ")
+            
         customer.balance += deposit_amount
 
     update_customer_data(account_number, add_balance)
@@ -143,15 +152,19 @@ def withdraw_balance(customer):
 
     withdraw_amount = get_integer("Enter Withdraw Amount: ")
 
+    while withdraw_amount <= 0:
+        print("Amount must be positive.")
+        withdraw_amount = get_integer("Enter Withdraw Amount: ")
+
     if customer.account_type == "s":
 
-        while customer.balance - withdraw_amount < MIN_SAVING_BALANCE:
+        while customer.balance - withdraw_amount < MIN_SAVING_BALANCE  or withdraw_amount <= 0:
             print(f"Saving Account Balance can't be below {MIN_SAVING_BALANCE}")
             withdraw_amount = get_integer("Enter Withdraw Amount: ")
 
     elif customer.account_type == "c":
 
-        while customer.balance - withdraw_amount < MIN_CURRENT_BALANCE:
+        while customer.balance - withdraw_amount < MIN_CURRENT_BALANCE  or withdraw_amount <= 0:
             print(f"Current Account Balance can't be below {MIN_CURRENT_BALANCE}")
             withdraw_amount = get_integer("Enter Withdraw Amount: ")
 
