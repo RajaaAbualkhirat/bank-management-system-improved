@@ -169,6 +169,7 @@ def withdraw_balance(customer):
             withdraw_amount = get_integer("Enter Withdraw Amount: ")
 
     customer.balance -= withdraw_amount
+    print("Operation completed.")
 
 
 def withdraw_money():
