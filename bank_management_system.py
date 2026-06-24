@@ -187,6 +187,7 @@ def update_account():
         customer.name = input("Update Name: ")
 
     update_customer_data(account_number, change_name)
+    print("Operation completed.")
 
 
 def search_account():
